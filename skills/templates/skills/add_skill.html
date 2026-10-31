@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add a Skill - Skill Swap</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Add a Skill</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Skill</button>
+    </form>
+
+    <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+
+</body>
+</html>

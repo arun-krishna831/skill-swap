@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skill Swap Dashboard</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Welcome to Skill Swap!</h1>
+
+    <p>You are logged in as {{ request.user.username }}.</p>
+
+    <hr>
+
+    <h2>What would you like to do?</h2>
+
+    <ul>
+        <li><a href="{% url 'add_skill' %}">Add a Skill</a></li>
+        <li><a href="{% url 'my_skills' %}">My Skills</a></li>
+        <li><a href="{% url 'browse_skills' %}">Browse Other People's Skills</a></li>
+        <li><a href="{% url 'incoming_requests' %}">Incoming Requests</a></li>
+    </ul>
+
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+</body>
+</html>

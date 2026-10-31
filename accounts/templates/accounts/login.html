@@ -1,0 +1,33 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Skill Swap</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Skill Swap</h1>
+    <p>Connect with people. Share skills. Learn together.</p>
+
+    <hr>
+
+    <h2>Welcome Back!</h2>
+    <p>Log in to your account to continue.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p>
+        Don't have an account?
+        <a href="{% url 'register' %}">Create an account</a>
+    </p>
+
+</body>
+</html>

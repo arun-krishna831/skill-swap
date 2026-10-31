@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Browse Skills - Skill Swap</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Discover Other People's Skills</h1>
+
+    <!-- Filter skills by type -->
+    <form method="GET">
+        <label for="type">Filter by skill type:</label>
+
+        <select name="type" id="type">
+            <option value=""
+                {% if not selected_type %}selected{% endif %}>
+                All Skills
+            </option>
+
+            <option value="teach"
+                {% if selected_type == 'teach' %}selected{% endif %}>
+                Can Teach
+            </option>
+
+            <option value="learn"
+                {% if selected_type == 'learn' %}selected{% endif %}>
+                Wants to Learn
+            </option>
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <hr>
+
+    <!-- Display other users' skills -->
+    {% for skill in skills %}
+
+        <h3>{{ skill.name }}</h3>
+
+        <p>
+            <strong>Offered by:</strong>
+            {{ skill.user.username }}
+        </p>
+
+        <p>
+            <strong>Skill Type:</strong>
+            {{ skill.get_skill_type_display }}
+        </p>
+
+        <p>
+            <strong>Description:</strong>
+            {{ skill.description|default:"No description provided." }}
+        </p>
+
+        <a href="{% url 'send_request' skill.id %}">
+            Send Exchange Request
+        </a>
+
+        <hr>
+
+    {% empty %}
+
+        <p>No skills found for this filter.</p>
+
+    {% endfor %}
+
+    <p>
+        <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+    </p>
+
+</body>
+</html>

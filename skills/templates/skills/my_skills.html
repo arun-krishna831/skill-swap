@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Skills - Skill Swap</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>My Skills</h1>
+
+    <p>
+        <a href="{% url 'add_skill' %}">Add Another Skill</a>
+    </p>
+
+    <hr>
+
+    {% for skill in skills %}
+        <h3>{{ skill.name }}</h3>
+
+        <p>
+            <strong>Skill Type:</strong>
+            {{ skill.get_skill_type_display }}
+        </p>
+
+        <p>
+            <strong>Description:</strong>
+            {{ skill.description|default:"No description provided." }}
+        </p>
+
+        <hr>
+    {% empty %}
+        <p>You haven't added any skills yet.</p>
+    {% endfor %}
+
+    <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+
+</body>
+</html>

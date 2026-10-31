@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Exchange Request - Skill Swap</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Send Skill Exchange Request</h1>
+
+    <p>
+        You want to exchange skills with:
+        <strong>{{ requested_skill.user.username }}</strong>
+    </p>
+
+    <p>
+        <strong>Requested skill:</strong>
+        {{ requested_skill.name }}
+    </p>
+
+    <hr>
+
+    <h2>Choose a skill you can teach</h2>
+
+    {% if my_skills %}
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="offered_skill">
+                Select your skill:
+            </label>
+
+            <select name="offered_skill" id="offered_skill" required>
+                {% for skill in my_skills %}
+                    <option value="{{ skill.id }}">
+                        {{ skill.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Submit Request</button>
+        </form>
+    {% else %}
+        <p>
+            You haven't added any skills that you can teach yet.
+        </p>
+
+        <a href="{% url 'add_skill' %}">Add a Skill</a>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'browse_skills' %}">Back to Browse Skills</a>
+    </p>
+
+</body>
+</html>

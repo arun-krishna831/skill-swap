@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Incoming Requests - Skill Swap</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Incoming Skill Exchange Requests</h1>
+
+    {% for exchange in requests %}
+        <h3>Request from {{ exchange.sender.username }}</h3>
+
+        <p>
+            <strong>They offer:</strong>
+            {{ exchange.offered_skill.name }}
+        </p>
+
+        <p>
+            <strong>They want:</strong>
+            {{ exchange.requested_skill.name }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ exchange.get_status_display }}
+        </p>
+
+        {% if exchange.status == 'pending' %}
+            <form method="POST"
+                  action="{% url 'respond_request' exchange.id %}">
+                {% csrf_token %}
+
+                <button type="submit" name="action" value="accept">
+                    Accept
+                </button>
+
+                <button type="submit" name="action" value="reject">
+                    Reject
+                </button>
+            </form>
+        {% endif %}
+
+        <hr>
+    {% empty %}
+        <p>You have no incoming requests yet.</p>
+    {% endfor %}
+
+    <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+
+</body>
+</html>
